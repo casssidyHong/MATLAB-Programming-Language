@@ -1,0 +1,44 @@
+clc;
+
+% 載入圖片
+Source = imread('input1_110550143.jpg'); 
+Overlay = imread('input2_110550143.png'); 
+
+% 旋轉Source圖片
+Source = imrotate(Source, -90); 
+
+% 設定 Overlay 起始位置
+start_row = 2250; % 行起點 (y)
+start_col = 1700; % 列起點 (x)
+
+% 根據條件建立 2D 邏輯陣列
+mask = Overlay(:,:,1) > 150 & Overlay(:,:,2) < 100 & Overlay(:,:,3) < 100; 
+
+% 記錄 Overlay 圖片中符合條件的坐標
+[rows, columns] = find(mask);
+
+% 將這些行和列移動到指定的起始位置
+rows_shifted = rows + start_row - 1;
+columns_shifted = columns + start_col - 1;
+
+% 檢查是否超出邊界
+valid_indices = rows_shifted <= size(Source, 1) & columns_shifted <= size(Source, 2);
+rows_shifted = rows_shifted(valid_indices);
+columns_shifted = columns_shifted(valid_indices);
+rows = rows(valid_indices);
+columns = columns(valid_indices);
+
+% 逐個顏色進行覆蓋
+for color = 1:3
+    Sc = sub2ind(size(Source), rows_shifted, columns_shifted, color * ones(size(rows_shifted)));
+    Ov = sub2ind(size(Overlay), rows, columns, color * ones(size(rows)));
+    
+    % 將 Overlay 圖片覆蓋到 Source 圖片
+    Source(Sc) = Overlay(Ov);
+end
+
+% 顯示圖片
+imshow(Source);
+
+% 保存圖片
+imwrite(Source, 'output_110550143.jpg');

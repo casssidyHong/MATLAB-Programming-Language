@@ -1,0 +1,34 @@
+clc;
+
+fprintf('Practices 1\n');
+
+v = input('cin: ');
+
+numerator = v(1)*v(4) + v(3)*v(2);
+denominator = v(2)*v(4);
+
+fprintf('%d/%d + %d/%d = %d/%d\n', v(1), v(2), v(3), v(4), ...
+        numerator, denominator);
+
+fprintf('\nPractices 2\n');
+n = 1:1000;  
+sum_fraction = sum(1 ./ n);  
+disp(sum_fraction);  
+
+fprintf('\nPractices 3\n');
+a = input('請輸入值 a: ');  % 輸入 a 的值
+n = 0:100;  % 計算從 0 到 100 的指數
+
+terms = cumprod([1 a./(1:100)]);  % 第0項為1，其餘項按公式累積
+
+sum_series = sum(terms);
+
+fprintf('計算結果: %.10f\n', sum_series);
+fprintf('exp(a) = %.10f\n', exp(a));
+
+
+fprintf('\nPractices 4\n');
+
+fprintf('\nPractices 5\n');
+
+fprintf('\nPractices 6\n');
